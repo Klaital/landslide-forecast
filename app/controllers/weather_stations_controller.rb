@@ -19,12 +19,13 @@ class WeatherStationsController < ApplicationController
     end.sort
 
     @old_reports = {}
-    @old_sum = 0
+    @old_sum = 0.0
     @old_days.each do |d|
       reports = WeatherReport.where(:latitude => @weather_station.latitude, :longitude => @weather_station.longitude, :date => d)
       if reports.length > 0
-        @old_reports[d] = reports.first
-        @old_sum = @old_reports[d].precip
+        r = reports.first
+        @old_reports[d] = r
+        @old_sum += r.precip
       end
     end
 
@@ -35,12 +36,12 @@ class WeatherStationsController < ApplicationController
     end.sort
 
     @recent_reports = {}
-    @recent_sum = 0
+    @recent_sum = 0.0
     @recent_days.each do |d|
       reports = WeatherReport.where(:latitude => @weather_station.latitude, :longitude => @weather_station.longitude, :date => d)
       if reports.length > 0
         @recent_reports[d] = reports.first
-        @recent_sum = @recent_reports[d].precip
+        @recent_sum += @recent_reports[d].precip
       end
     end
 
