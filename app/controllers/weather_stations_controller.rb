@@ -45,6 +45,13 @@ class WeatherStationsController < ApplicationController
       end
     end
 
+    # landslide threshhold line: y = 3.5 - 0.67x
+    # where y := @old_sum, and x := @recent_sum
+    # Thus, for the station, if 3.5 - 0.67 * @recent_sum < @old_sum, then fire the alert!
+    @alert_yesterday = (3.5 - 0.67 * @recent_sum < @old_sum)
+    if @alert_yesterday
+      flash[:notice] = "As of yesterday's rainfall, this station is at risk for landslides!"
+    end
   end
 
   # GET /weather_stations/new
