@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @weather_report.date %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @weather_report.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @weather_report.longitude %>
+</p>
+
+<p>
+  <strong>Precip:</strong>
+  <%= @weather_report.precip * 10 %> mm
+</p>
+
+<%= link_to 'Back', weather_reports_path %>

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Weather Reports</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Precip</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @weather_reports.each do |weather_report| %>
+      <tr>
+        <td><%= weather_report.date %></td>
+        <td><%= weather_report.latitude %></td>
+        <td><%= weather_report.longitude %></td>
+        <td><%= @weather_report.precip * 10 %> mm</td>
+        <td><%= link_to 'Show', weather_report %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Weather Report', new_weather_report_path %>

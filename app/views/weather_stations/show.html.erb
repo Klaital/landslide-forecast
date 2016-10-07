@@ -1,0 +1,68 @@
+<p id="notice"><%= notice %></p>
+<h1>Station Report: <%= @weather_station.name %></h1>
+<%= link_to 'Back to stations list', weather_stations_path %>
+
+<p>
+  <strong>Lat/Long:</strong>
+  <%= @weather_station.latitude %>,<%= @weather_station.longitude %>
+</p>
+
+<%= link_to 'Edit', edit_weather_station_path(@weather_station) %> |
+
+<h2>Weather Reports from this station</h2>
+<div class="weather-reports">
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Precip (mm)</th>
+    </tr>
+    <% @weather_reports.each do |r| %>
+    <tr>
+      <td><%= r.date %></td>
+      <td><%= r.precip * 10 %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+
+<h2>Weather Reports from days Today - 4 through Today - 15</h2>
+<div class="weather-reports">
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Precip (mm)</th>
+    </tr>
+
+    <% @old_days.each do |d| %>
+        <tr>
+          <td><%= d %></td>
+          <td><%= (@old_reports.has_key?(d)) ? @old_reports[d].precip * 10 : '' %></td>
+        </tr>
+    <% end %>
+    <tr>
+      <th>Sum</th>
+      <th><%= @old_sum %></th>
+    </tr>
+  </table>
+</div>
+
+<h2>Weather Reports from Yesterday through Today - 3</h2>
+<div class="weather-reports">
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Precip (mm)</th>
+    </tr>
+
+    <% @recent_days.each do |d| %>
+        <tr>
+          <td><%= d %></td>
+          <td><%= (@recent_reports.has_key?(d)) ? @recent_reports[d].precip * 10 : '' %></td>
+        </tr>
+    <% end %>
+    <tr>
+      <th>Sum</th>
+      <th><%= @recent_sum %></th>
+    </tr>
+  </table>
+</div>
