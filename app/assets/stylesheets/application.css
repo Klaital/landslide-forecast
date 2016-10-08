@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+
+table {
+    border: 1px;
+    width: 40%;
+    border-collapse: collapse;
+}
+td, th {
+    padding: .666em .75em;
+    border: 1px solid #e8e8e8;
+    display: table-cell;
+}
+
+th {
+    background-color: rgba(0,0,0,.03);
+    font-weight: 700;
+}
