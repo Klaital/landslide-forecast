@@ -50,7 +50,7 @@ class WeatherStationsController < ApplicationController
     # Thus, for the station, if 3.5 - 0.67 * @recent_sum < @old_sum, then fire the alert!
     @alert_yesterday = (3.5 - 0.67 * @recent_sum < @old_sum)
     if @alert_yesterday
-      flash[:notice] = "As of yesterday's rainfall, this station is at risk for landslides!"
+      flash[:alert] = "As of yesterday's rainfall, station #{@weather_station.name} is at risk for landslides!!"
     end
   end
 

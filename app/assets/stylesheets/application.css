@@ -29,3 +29,9 @@ th {
     background-color: rgba(0,0,0,.03);
     font-weight: 700;
 }
+
+#alert {
+    background-color: red;
+    font-weight: 700;
+    font-size: 150%;
+}
