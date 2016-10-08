@@ -1,11 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  latitude: 1.5
-  longitude: 1.5
-  precip: 1.5
 
-two:
-  latitude: 1.5
-  longitude: 1.5
-  precip: 1.5
+<% 1.upto(20) do |i| %>
+fix_1_<%= i %>:
+  latitude: 24.860971
+  longitude: -100.413901
+  precip: 0.10
+  date: <%= (Date.today - i).year %><%= (Date.today - i).month.to_s.rjust(2,'0') %><%= (Date.today - i).day.to_s.rjust(2,'0') %>
+<% end %>
+
+<% 1.upto(20) do |i| %>
+fix_2_<%= i %>:
+  latitude: 45.563092
+  longitude: -116.971135
+  precip: 10.0
+  date: <%= (Date.today - i).year %><%= (Date.today - i).month.to_s.rjust(2,'0') %><%= (Date.today - i).day.to_s.rjust(2,'0') %>
+<% end %>

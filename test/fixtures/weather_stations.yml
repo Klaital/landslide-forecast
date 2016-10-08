@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  latitude: 1.5
-  longitude: 1.5
-  name: MyString
+  latitude: 24.860971
+  longitude: -100.413901
+  name: Catarino Rodríguez
+
 
 two:
-  latitude: 1.5
-  longitude: 1.5
-  name: MyString
+  latitude: 45.563092
+  longitude: -116.971135
+  name: "Zumwalt Prarie Preserve"
+  
