@@ -10,7 +10,12 @@ namespace :db do
                  puts "No station specified, updating all..."
                  WeatherStationAlert.all
                else
-                 WeatherStationAlert.where(:latitude => args.lat, :longitude => args.long)
+                 a = WeatherStationAlert.where(:latitude => args.lat, :longitude => args.long)
+                 if a.length == 0
+                   [WeatherStationAlert.new(:latitude => args.lat, :longitude => args.long)]
+                 else
+                   a
+                 end
                end
 
     puts "Got #{stations.length} stations to update"
@@ -29,7 +34,7 @@ namespace :db do
       old_reports.each {|r| old_sum += r.precip}
       puts " for #{old_sum / 10} mm of precipitation"
       recent_reports = WeatherReport.where(:date => recent_dates, :latitude => s.latitude, :longitude => s.longitude)
-      puts "Found #{recent_reports.count} recent reports"
+      print "Found #{recent_reports.count} recent reports"
       recent_reports.each {|r| recent_sum += r.precip}
       puts " for #{recent_sum / 10} mm of precipitation"
 
@@ -42,27 +47,12 @@ namespace :db do
       station_level   = recent_sum_inches
       puts "Station level: #{station_level}"
       alert_level_yesterday = station_level - threshold_level
-      alert = WeatherStationAlert.where(:latitude => args.lat, :longitude => args.long)
-      alert = if alert.length == 0
-                print "Creating new alert... "
-                WeatherStationAlert.new({
-                                            :latitude => args.lat,
-                                            :longitude => args.long,
-                                            :level => alert_level_yesterday,
-                                            :old_sum => old_sum,
-                                            :recent_sum => recent_sum,
-                                            :alert_for => Date.today - 1,
-                                        })
-              else
-                print "Updating existing alert... "
-                alert = alert.first
-                alert.level = alert_level_yesterday
-                alert.old_sum = old_sum
-                alert.recent_sum = recent_sum
-                alert.alert_for = Date.today - 1
-                alert
-              end
-      alert.save
+
+      s.level = alert_level_yesterday
+      s.old_sum = old_sum
+      s.recent_sum = recent_sum
+      s.alert_for = Date.today - 1
+      s.save
       puts "Station #{args.lat},#{args.long} updated in #{((Time.now - station_start).to_f * 1000).round} ms"
     end
   end
