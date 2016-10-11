@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161007213955) do
+ActiveRecord::Schema.define(version: 20161010232614) do
 
   create_table "weather_reports", force: :cascade do |t|
     t.float    "latitude"
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(version: 20161007213955) do
     t.index ["date"], name: "index_weather_reports_on_date"
     t.index ["latitude"], name: "index_weather_reports_on_latitude"
     t.index ["longitude"], name: "index_weather_reports_on_longitude"
+  end
+
+  create_table "weather_station_alerts", force: :cascade do |t|
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "alert_for"
+    t.float    "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float    "old_sum"
+    t.float    "recent_sum"
   end
 
   create_table "weather_stations", force: :cascade do |t|

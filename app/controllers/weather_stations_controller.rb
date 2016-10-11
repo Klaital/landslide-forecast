@@ -49,8 +49,10 @@ class WeatherStationsController < ApplicationController
     # where y := @old_sum, and x := @recent_sum
     # Thus, for the station, if 3.5 - 0.67 * @recent_sum < @old_sum, then fire the alert!
     @alert_yesterday = (3.5 - 0.67 * @recent_sum < @old_sum)
-    if @alert_yesterday
+    if @alert.level > 0
       flash[:alert] = "As of yesterday's rainfall, station #{@weather_station.name} is at risk for landslides!!"
+    else
+      flash[:notice] = "This station is at low landslide risk"
     end
   end
 
@@ -107,6 +109,7 @@ class WeatherStationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_weather_station
       @weather_station = WeatherStation.find(params[:id])
+      @alert = WeatherStationAlert.where(:latitude => @weather_station.latitude, :longitude => @weather_station.longitude).first unless @weather_station.nil?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

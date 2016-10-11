@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Weather Station Alerts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Alert for</th>
+      <th>Level</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @weather_station_alerts.each do |weather_station_alert| %>
+      <tr>
+        <td><%= weather_station_alert.latitude %></td>
+        <td><%= weather_station_alert.longitude %></td>
+        <td><%= weather_station_alert.alert_for %></td>
+        <td><%= weather_station_alert.level %></td>
+        <td><%= link_to 'Show', weather_station_alert %></td>
+        <td><%= link_to 'Edit', edit_weather_station_alert_path(weather_station_alert) %></td>
+        <td><%= link_to 'Destroy', weather_station_alert, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Weather Station Alert', new_weather_station_alert_path %>
