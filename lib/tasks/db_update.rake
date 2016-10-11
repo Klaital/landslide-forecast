@@ -28,7 +28,7 @@ namespace :db do
 
       puts "Working on date #{today}"
       data_dir = Rails.root.join('data')
-      converted_file = data_dir.join("#{today}.txt")
+      converted_file = data_dir.join("#{today}.txt").to_s
 
       # Reduce our workload for repeat days.
       if File.exists?("#{converted_file.to_s}.done")
@@ -36,18 +36,24 @@ namespace :db do
         next
       end
 
-      data_file = data_dir.join("nws_precip_conus_#{today}.nc").to_s
+      data_file_basename = "nws_precip_conus_#{today}.nc"
+      data_file = data_dir.join(data_file_basename).to_s
       unless File.exists?(data_file)
+        puts "Downloading latest data from water.weather.gov"
         data_url = "http://water.weather.gov/precip/p_download_new/#{d.year}/#{d.month.to_s.rjust(2,'0')}/#{d.day.to_s.rjust(2,'0')}/nws_precip_#{today}_nc.tar.gz"
         latlong_converter = Rails.root.join('tools', 'nctoasc.exe').to_s
 
         puts "No data downloaded for #{today} yet. Downloading now from #{data_url}"
-        puts `cd #{data_dir.to_s} && wget -O - #{data_url} | gunzip | tar -x #{data_file}`
+        cmd = "cd #{data_dir.to_s} && wget -O - #{data_url} | gunzip | tar -x ./#{data_file_basename}"
+        puts "Running cmd > #{cmd}"
+        puts `#{cmd}`
         puts "Converting to Lat/Long from original NC file's polar coordinates."
-        puts `cd #{data_dir.to_s} && #{latlong_converter} #{today}`
+        cmd = "cd #{data_dir.to_s} && #{latlong_converter} #{today}"
+        puts "Running cmd > #{cmd}"
+        puts `#{cmd}`
       end
 
-      puts "Update the DB, saving results to a file as we go"
+      puts "Update the DB"
       File.open(converted_file) do |f|
         skipped = 0
         created = 0
