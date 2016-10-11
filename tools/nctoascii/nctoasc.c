@@ -162,7 +162,7 @@ printf("finished reading %s\n",infile);
 sprintf(outfile, "%s/%s.txt", OUTPUT_DIR, inputdate);
 if ((out_file = fopen(outfile, "wt+")) != NULL) {
 	counter = 0;
-	fprintf(out_file, "\"id\", \"hrapx\", \"hrapy\", \"lat\", \"long\", \"value\"\n");
+	fprintf(out_file, "\"date\", \"id\", \"hrapx\", \"hrapy\", \"lat\", \"long\", \"value\"\n");
 	for (i = 0; i< HRAP_Y; i++) {
 		for (j = 0; j< HRAP_X; j++) {
       	if (preciptype == NC_SHORT){
@@ -181,7 +181,7 @@ if ((out_file = fopen(outfile, "wt+")) != NULL) {
 			hrap.x = j + HRAP_XOR + 0.5;
 			hrap.y = i + HRAP_YOR + 0.5;
 			latlon = HrapToLatLong(hrap);
-			fprintf(out_file, "%d, %d, %d, %f, -%f, %f\n",counter, j+HRAP_XOR, i+HRAP_YOR, latlon.y, latlon.x, value);
+			fprintf(out_file, "%s, %d, %d, %d, %f, -%f, %f\n", inputdate, counter, j+HRAP_XOR, i+HRAP_YOR, latlon.y, latlon.x, value);
 	}	}
 	fclose(out_file);
 } else {
