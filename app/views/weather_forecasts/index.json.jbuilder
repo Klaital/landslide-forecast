@@ -1,0 +1,1 @@
+json.array! @weather_forecasts, partial: 'weather_forecasts/weather_forecast', as: :weather_forecast

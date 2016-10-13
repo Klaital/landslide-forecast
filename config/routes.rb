@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :weather_forecasts
   resources :weather_station_alerts
   resources :weather_stations
   resources :weather_reports

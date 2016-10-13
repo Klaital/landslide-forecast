@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @weather_forecast.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @weather_forecast.longitude %>
+</p>
+
+<p>
+  <strong>Precip:</strong>
+  <%= @weather_forecast.precip %>
+</p>
+
+<p>
+  <strong>Forecasted on:</strong>
+  <%= @weather_forecast.forecasted_on %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @weather_forecast.date %>
+</p>
+
+<%= link_to 'Edit', edit_weather_forecast_path(@weather_forecast) %> |
+<%= link_to 'Back', weather_forecasts_path %>
