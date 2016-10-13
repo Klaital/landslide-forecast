@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013173225) do
+ActiveRecord::Schema.define(version: 20161013213933) do
+
+  create_table "api_keys", force: :cascade do |t|
+    t.string   "service"
+    t.string   "key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "weather_forecasts", force: :cascade do |t|
     t.float    "latitude"
