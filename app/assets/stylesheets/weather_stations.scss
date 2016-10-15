@@ -1,3 +1,14 @@
 // Place all the styles related to the weather_stations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+td.alert-on {
+  font-weight: 700;
+  font-size: 150%;
+  background-color: orangered;
+}
+td.alert-off {
+  font-weight: 700;
+  font-size: 150%;
+  background-color: palegreen;
+}

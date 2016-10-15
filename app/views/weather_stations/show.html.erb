@@ -1,98 +1,101 @@
-<span id="notice"><%= notice %></span>
+<p id="notice"><%= notice %></p>
 <span id="alert"><%= alert %></span>
 <h1>Station Report: <%= @weather_station.name %></h1>
-<%= link_to 'Back to stations list', weather_stations_path %> |
-<%= link_to 'Edit this station\'s settings', edit_weather_station_path(@weather_station) %>
+<% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+<% end %>
+<%= link_to 'Back to stations list', weather_stations_path %>
 
 <p>
   <strong>Lat/Long:</strong>
   <%= @weather_station.latitude %>,<%= @weather_station.longitude %>
 </p>
 
-<h2>Risk Summary</h2>
-<table>
-  <tr>
-    <th>
-      Risk Level
-    </th>
-    <td>
-      <%= @alert.nil? ? 'n/a' : @alert.level %>
-    </td>
-  </tr>
-  <tr>
-    <th>
-      Recent Precip (P3)
-    </th>
-    <td>
-      <%= @alert.nil? ? 'n/a' : @alert.recent_sum %>
-    </td>
-  </tr>
-  <tr>
-    <th>
-      Older Precip (P15)
-    </th>
-    <td>
-      <%= @alert.nil? ? 'n/a' : @alert.old_sum %>
-    </td>
-  </tr>
-</table>
+<%= link_to 'Edit', edit_weather_station_path(@weather_station) %> |
 
-<div class="more-information">
-    <h2>Weather Reports from this station</h2>
-    <div class="weather-reports">
-      <table>
-        <tr>
-          <th>Date</th>
-          <th>Precip (inches)</th>
-        </tr>
-        <% @weather_reports.each do |r| %>
-        <tr>
-          <td><%= r.date %></td>
-          <td><%= r.precip_inches %></td>
-        </tr>
-        <% end %>
-      </table>
-    </div>
+<h2>Landslide Forecasts for this station</h2>
+<p>
+  All precipitation numbers are in inches of liquid water.
+</p>
+<div class="weather-reports">
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Alert Level</th>
+      <th>Recent Precip (P3)</th>
+      <th>Older Precip (P15)</th>
+    </tr>
+    <tr>
+      <td>Today</td>
+      <td class="alert-<%= (@alert_today.level >= 0) ? 'on' : 'off' %>"><%= @alert_today.level %></td>
+      <td><%= @alert_today.recent_sum %></td>
+      <td><%= @alert_today.old_sum %></td>
+    </tr>
+    <% @alert_forecasts.each_pair do |date, alert| %>
+    <tr>
+      <td><%= date %></td>
+      <td class="alert-<%= (alert.level >= 0) ? 'on' : 'off' %>"><%= alert.level %></td>
+      <td><%= alert.recent_sum %></td>
+      <td><%= alert.old_sum %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
 
-    <h2>Weather Reports from days Today - 4 through Today - 15</h2>
-    <div class="weather-reports">
-      <table>
-        <tr>
-          <th>Date</th>
-          <th>Precip (inches)</th>
-        </tr>
+<h2>Weather Reports from this station</h2>
+<div class="weather-reports">
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Precip (inches)</th>
+    </tr>
+    <% @weather_reports.each do |r| %>
+    <tr>
+      <td><%= r.date %></td>
+      <td><%= r.precip_inches %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
 
-        <% @old_days.each do |d| %>
-            <tr>
-              <td><%= d %></td>
-              <td><%= (@old_reports.has_key?(d)) ? @old_reports[d].precip_inches : '' %></td>
-            </tr>
-        <% end %>
-        <tr>
-          <th>Sum</th>
-          <th><%= @old_sum %></th>
-        </tr>
-      </table>
-    </div>
+<h2>Weather Reports from days Today - 4 through Today - 15</h2>
+<div class="weather-reports">
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Precip (inches)</th>
+    </tr>
 
-    <h2>Weather Reports from Yesterday through Today - 3</h2>
-    <div class="weather-reports">
-      <table>
+    <% @old_days.each do |d| %>
         <tr>
-          <th>Date</th>
-          <th>Precip (inches)</th>
+          <td><%= d %></td>
+          <td><%= (@old_reports.has_key?(d)) ? @old_reports[d].precip_inches : '' %></td>
         </tr>
+    <% end %>
+    <tr>
+      <th>Sum</th>
+      <th><%= @old_sum %></th>
+    </tr>
+  </table>
+</div>
 
-        <% @recent_days.each do |d| %>
-            <tr>
-              <td><%= d %></td>
-              <td><%= (@recent_reports.has_key?(d)) ? @recent_reports[d].precip_inches : '' %></td>
-            </tr>
-        <% end %>
+<h2>Weather Reports from Yesterday through Today - 3</h2>
+<div class="weather-reports">
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Precip (inches)</th>
+    </tr>
+
+    <% @recent_days.each do |d| %>
         <tr>
-          <th>Sum</th>
-          <th><%= @recent_sum %></th>
+          <td><%= d %></td>
+          <td><%= (@recent_reports.has_key?(d)) ? @recent_reports[d].precip_inches : '' %></td>
         </tr>
-      </table>
-    </div>
+    <% end %>
+    <tr>
+      <th>Sum</th>
+      <th><%= @recent_sum %></th>
+    </tr>
+  </table>
 </div>

@@ -45,11 +45,7 @@ class WeatherStationsController < ApplicationController
       end
     end
 
-    # landslide threshhold line: y = 3.5 - 0.67x
-    # where y := @old_sum, and x := @recent_sum
-    # Thus, for the station, if 3.5 - 0.67 * @recent_sum < @old_sum, then fire the alert!
-    @alert_yesterday = (3.5 - 0.67 * @recent_sum < @old_sum)
-    if @alert.level > 0
+    if @alert_today.level > 0
       flash[:alert] = "As of yesterday's rainfall, station #{@weather_station.name} is at risk for landslides!!"
     else
       flash[:notice] = "This station is at low landslide risk"
@@ -109,7 +105,12 @@ class WeatherStationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_weather_station
       @weather_station = WeatherStation.find(params[:id])
-      @alert = WeatherStationAlert.where(:latitude => @weather_station.latitude, :longitude => @weather_station.longitude).first unless @weather_station.nil?
+      @alert_today = @weather_station.alert
+      @alert_forecasts = {}
+      (0..7).each do |i|
+        d = Date.today + i
+        @alert_forecasts[d] = @weather_station.alert(d)
+      end 
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
