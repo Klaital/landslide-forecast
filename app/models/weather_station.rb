@@ -6,10 +6,12 @@ class WeatherStation < ApplicationRecord
     hydra = Typhoeus::Hydra.new
     requests = Hash.new
     forecast_request = nil
+
+    logger.debug("Updating Station #{name} for dates: #{historical_dates}")
     
     # Construct the HTTP requests to Darksky: one for each of the past days we care about, and one for today to get the forecast
     historical_dates.each do |d|
-        endpoint = "https://api.darksky.net/forecast/#{darksky_secret}/#{self.latitude},#{self.longitude},#{d.to_s}T00:00:00"
+        endpoint = "https://api.darksky.net/forecast/#{darksky_secret}/#{self.latitude},#{self.longitude},#{d.to_s}"
         request = Typhoeus::Request.new(endpoint) 
         hydra.queue(request)
         requests[d] = request
