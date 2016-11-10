@@ -1,24 +1,8 @@
-# README
+# Landslide Risk Prediction
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Weather Data [Powered by Darksky](https://darksky.net/poweredby)
+Landslide risk algorithms courtesy of Rex Baum of the USGS
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Setup
+You'll need to create Darksky account and save your API key in the database. 
+It needs to have the service name 'Darksky'. You should also place this value in a fixture named 'darksky' in test/fixtures/api_keys.yml.
