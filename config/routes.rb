@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'users/new'
+  resources :users
 
   get 'static_pages/about'
   get 'static_pages/contact'
