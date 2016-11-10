@@ -23,3 +23,5 @@
 # There are credentials kept here for testing
 test/fixtures/api_keys.yml
 
+# Don't track the RubyMine project files
+.idea/*
