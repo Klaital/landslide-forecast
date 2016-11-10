@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013213933) do
+ActiveRecord::Schema.define(version: 20161109190444) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string   "service"
@@ -33,12 +33,14 @@ ActiveRecord::Schema.define(version: 20161013213933) do
     t.float    "latitude"
     t.float    "longitude"
     t.float    "precip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "date"
+    t.integer  "weather_station_id"
     t.index ["date"], name: "index_weather_reports_on_date"
     t.index ["latitude"], name: "index_weather_reports_on_latitude"
     t.index ["longitude"], name: "index_weather_reports_on_longitude"
+    t.index ["weather_station_id"], name: "index_weather_reports_on_weather_station_id"
   end
 
   create_table "weather_station_alerts", force: :cascade do |t|

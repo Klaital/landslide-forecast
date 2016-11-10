@@ -2,17 +2,28 @@
 
 
 <% 1.upto(20) do |i| %>
-fix_1_<%= i %>:
+wr_1_<%= i %>:
   latitude: 24.860971
   longitude: -100.413901
   precip: 0.10
   date: <%= (Date.today - i).year %><%= (Date.today - i).month.to_s.rjust(2,'0') %><%= (Date.today - i).day.to_s.rjust(2,'0') %>
+  weather_station: one
 <% end %>
 
 <% 1.upto(20) do |i| %>
-fix_2_<%= i %>:
+wr_2_<%= i %>:
   latitude: 45.563092
   longitude: -116.971135
   precip: 10.0
   date: <%= (Date.today - i).year %><%= (Date.today - i).month.to_s.rjust(2,'0') %><%= (Date.today - i).day.to_s.rjust(2,'0') %>
+  weather_station: two
+<% end %>
+
+<% 1.upto(20) do |i| %>
+wr_seatac_<%= i %>:
+  latitude: 47.44888889
+  longitude: -122.30944444
+  precip: 0.1
+  date: <%= (Date.today - i).year %><%= (Date.today - i).month.to_s.rjust(2,'0') %><%= (Date.today - i).day.to_s.rjust(2,'0') %>
+  weather_station: seatac
 <% end %>

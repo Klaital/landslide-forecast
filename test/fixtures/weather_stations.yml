@@ -10,4 +10,9 @@ two:
   latitude: 45.563092
   longitude: -116.971135
   name: "Zumwalt Prarie Preserve"
-  
+
+seatac:
+  name: "Seatac Airport"
+  latitude: 47.44888889
+  longitude: -122.30944444
+

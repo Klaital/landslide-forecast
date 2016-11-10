@@ -10,7 +10,7 @@ class WeatherStationsController < ApplicationController
   # GET /weather_stations/1
   # GET /weather_stations/1.json
   def show
-    @weather_reports = WeatherReport.where(:latitude => @weather_station.latitude, :longitude => @weather_station.longitude)
+    @weather_reports = @weather_station.weather_reports.all
 
 
     @old_days = (4..15).collect do |i|
@@ -21,7 +21,7 @@ class WeatherStationsController < ApplicationController
     @old_reports = {}
     @old_sum = 0.0
     @old_days.each do |d|
-      reports = WeatherReport.where(:latitude => @weather_station.latitude, :longitude => @weather_station.longitude, :date => d)
+      reports = @weather_station.weather_reports.where(:date => d)
       if reports.length > 0
         r = reports.first
         @old_reports[d] = r
@@ -38,7 +38,7 @@ class WeatherStationsController < ApplicationController
     @recent_reports = {}
     @recent_sum = 0.0
     @recent_days.each do |d|
-      reports = WeatherReport.where(:latitude => @weather_station.latitude, :longitude => @weather_station.longitude, :date => d)
+      reports = @weather_station.weather_reports.where(:date => d)
       if reports.length > 0
         @recent_reports[d] = reports.first
         @recent_sum += @recent_reports[d].precip

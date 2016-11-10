@@ -24,19 +24,22 @@
       <th>Alert Level</th>
       <th>Recent Precip (P3)</th>
       <th>Older Precip (P15)</th>
+      <th>Status</th>
     </tr>
     <tr>
       <td>Today</td>
-      <td class="alert-<%= (@alert_today.level >= 0) ? 'on' : 'off' %>"><%= @alert_today.level %></td>
-      <td><%= @alert_today.recent_sum %></td>
-      <td><%= @alert_today.old_sum %></td>
+      <td class="alert-<%= (@alert_today.level >= 0) ? 'on' : 'off' %>"><%= @alert_today.level.round(2) %></td>
+      <td><%= @alert_today.recent_sum.round(2) %></td>
+      <td><%= @alert_today.old_sum.round(2) %></td>
+      <td><%= @alert_today.level_description %></td>
     </tr>
     <% @alert_forecasts.each_pair do |date, alert| %>
     <tr>
       <td><%= date %></td>
-      <td class="alert-<%= (alert.level >= 0) ? 'on' : 'off' %>"><%= alert.level %></td>
-      <td><%= alert.recent_sum %></td>
-      <td><%= alert.old_sum %></td>
+      <td class="alert-<%= (alert.level >= 0) ? 'on' : 'off' %>"><%= alert.level.round(2) %></td>
+      <td><%= alert.recent_sum.round(2) %></td>
+      <td><%= alert.old_sum.round(2) %></td>
+      <td><%= alert.level_description %></td>
     </tr>
     <% end %>
   </table>
