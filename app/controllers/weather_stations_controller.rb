@@ -80,25 +80,25 @@ class WeatherStationsController < ApplicationController
   # PATCH/PUT /weather_stations/1
   # PATCH/PUT /weather_stations/1.json
   def update
-    # respond_to do |format|
-    #   if @weather_station.update(weather_station_params)
-    #     format.html { redirect_to @weather_station, notice: 'Weather station was successfully updated.' }
-    #     format.json { render :show, status: :ok, location: @weather_station }
-    #   else
-    #     format.html { render :edit }
-    #     format.json { render json: @weather_station.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    respond_to do |format|
+      if @weather_station.update(weather_station_params)
+        format.html { redirect_to @weather_station, notice: 'Weather station was successfully updated.' }
+        format.json { render :show, status: :ok, location: @weather_station }
+      else
+        format.html { render :edit }
+        format.json { render json: @weather_station.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # DELETE /weather_stations/1
   # DELETE /weather_stations/1.json
   def destroy
-    # @weather_station.destroy
-    # respond_to do |format|
-    #   format.html { redirect_to weather_stations_url, notice: 'Weather station was successfully destroyed.' }
-    #   format.json { head :no_content }
-    # end
+    @weather_station.destroy
+    respond_to do |format|
+      format.html { redirect_to weather_stations_url, notice: 'Weather station was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   private

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class WeatherStationsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @weather_station = weather_stations(:one)
+    @weather_station = weather_stations(:seatac)
   end
 
   test "should get index" do
