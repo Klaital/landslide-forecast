@@ -2,8 +2,12 @@
 
 one:
   email: user-one@example.com
-  password_digest: asdf
+  password_digest: <%= User.digest('password-one') %>
 
 two:
   email: user-two@example.com
-  password_digest: hjkl
+  password_digest: <%= User.digest('password-two') %>
+
+michael:
+  email: michael@example.com
+  password_digest: <%= User.digest('password-michael') %>

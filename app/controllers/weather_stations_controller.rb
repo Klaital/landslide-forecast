@@ -4,6 +4,10 @@ class WeatherStationsController < ApplicationController
   # GET /weather_stations
   # GET /weather_stations.json
   def index
+    unless logged_in?
+      flash.now[:warning] = 'Please log in to view your weather stations'
+      render 'sessions/new'
+    end
     @weather_stations = WeatherStation.all
   end
 
@@ -11,7 +15,6 @@ class WeatherStationsController < ApplicationController
   # GET /weather_stations/1.json
   def show
     @weather_reports = @weather_station.weather_reports.all
-
 
     @old_days = (4..15).collect do |i|
       d = Date.today - i

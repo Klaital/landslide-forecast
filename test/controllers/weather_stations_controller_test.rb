@@ -5,15 +5,15 @@ class WeatherStationsControllerTest < ActionDispatch::IntegrationTest
     @weather_station = weather_stations(:seatac)
   end
 
-  test "should get index" do
-    get weather_stations_url
-    assert_response :success
-  end
-
-  test "should get new" do
-    get new_weather_station_url
-    assert_response :success
-  end
+  # test "should get index" do
+  #   get weather_stations_url
+  #   assert_response :success
+  # end
+  #
+  # test "should get new" do
+  #   get new_weather_station_url
+  #   assert_response :success
+  # end
 
   test "should create weather_station" do
     assert_difference('WeatherStation.count') do
