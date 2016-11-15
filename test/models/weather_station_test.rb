@@ -38,7 +38,11 @@ class WeatherStationTest < ActiveSupport::TestCase
   end
 
   test "Darksky update should create historical weather reports" do
-    new_station = WeatherStation.new(:name => 'Darksky Test Station', :latitude => 47.44888889, :longitude => -122.30944444)
+    user = User.new(email: 'darksky@example.org')
+    user.password = user.password_confirmation = 'password'
+    assert user.valid?
+    user.save
+    new_station = user.weather_stations.create(:name => 'Darksky Test Station', :latitude => 47.44888889, :longitude => -122.30944444)
     assert(new_station.valid?)
     new_station.save
     new_station.update_from_darksky

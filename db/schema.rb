@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161114172517) do
+ActiveRecord::Schema.define(version: 20161115001012) do
 
   create_table "api_keys", force: :cascade do |t|
     t.string   "service"
@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(version: 20161114172517) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_weather_stations_on_user_id"
   end
 
 end

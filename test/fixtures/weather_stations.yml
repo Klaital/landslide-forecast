@@ -4,15 +4,20 @@ one:
   latitude: 24.860971
   longitude: -100.413901
   name: Catarino Rodríguez
+  user: one
 
 
 two:
   latitude: 45.563092
   longitude: -116.971135
   name: "Zumwalt Prarie Preserve"
+  user: two
 
 seatac:
   name: "Seatac Airport"
   latitude: 47.44888889
   longitude: -122.30944444
+  user: michael
+
+
 

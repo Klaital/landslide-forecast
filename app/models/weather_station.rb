@@ -1,4 +1,5 @@
 class WeatherStation < ApplicationRecord
+  belongs_to :user
   has_many :weather_reports
 
   # Query Darksky.net for each of the historical dates specified, 

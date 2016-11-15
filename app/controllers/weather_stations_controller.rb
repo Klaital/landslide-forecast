@@ -6,14 +6,20 @@ class WeatherStationsController < ApplicationController
   def index
     unless logged_in?
       flash.now[:warning] = 'Please log in to view your weather stations'
-      render 'sessions/new'
+      redirect_to login_path
     end
+
     @weather_stations = WeatherStation.all
   end
 
   # GET /weather_stations/1
   # GET /weather_stations/1.json
   def show
+    unless logged_in? && current_user.id == @weather_station.user.id
+      flash.now[:warning] = 'Please log in to view your weather stations'
+      redirect_to login_path and return
+    end
+
     @weather_reports = @weather_station.weather_reports.all
 
     @old_days = (4..15).collect do |i|
@@ -57,17 +63,30 @@ class WeatherStationsController < ApplicationController
 
   # GET /weather_stations/new
   def new
-    @weather_station = WeatherStation.new
+    unless logged_in?
+      flash.now[:warning] = 'Please log in to view your weather stations'
+      redirect_to login_path and return
+    end
+    @weather_station = current_user.weather_statiosn.create
   end
 
   # GET /weather_stations/1/edit
   def edit
+    unless logged_in? && current_user.id == @weather_station.user.id
+      flash.now[:warning] = 'Please log in to view your weather stations'
+      redirect_to login_path
+    end
   end
 
   # POST /weather_stations
   # POST /weather_stations.json
   def create
-    @weather_station = WeatherStation.new(weather_station_params)
+    unless logged_in?
+      render :file => 'public/401', :status => :unauthorized, :layout => false and return
+    end
+
+    @user = User.find(weather_station_params[:user_id])
+    @weather_station = @user.weather_stations.create(weather_station_params)
 
     respond_to do |format|
       if @weather_station.save
@@ -83,6 +102,11 @@ class WeatherStationsController < ApplicationController
   # PATCH/PUT /weather_stations/1
   # PATCH/PUT /weather_stations/1.json
   def update
+    unless logged_in? && current_user.id == @weather_station.user.id
+      # debugger
+      render :file => 'public/401', :status => :unauthorized, :layout => false and return
+    end
+
     respond_to do |format|
       if @weather_station.update(weather_station_params)
         format.html { redirect_to @weather_station, notice: 'Weather station was successfully updated.' }
@@ -97,6 +121,10 @@ class WeatherStationsController < ApplicationController
   # DELETE /weather_stations/1
   # DELETE /weather_stations/1.json
   def destroy
+    unless logged_in? && current_user.id == @weather_station.user.id
+      render :file => 'public/401', :status => :unauthorized, :layout => false and return
+    end
+
     @weather_station.destroy
     respond_to do |format|
       format.html { redirect_to weather_stations_url, notice: 'Weather station was successfully destroyed.' }
@@ -107,17 +135,23 @@ class WeatherStationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_weather_station
-      @weather_station = WeatherStation.find(params[:id])
-      @alert_today = @weather_station.alert
-      @alert_forecasts = {}
-      (0..7).each do |i|
-        d = Date.today + i
-        @alert_forecasts[d] = @weather_station.alert(d)
-      end 
+      if logged_in?
+        begin
+          @weather_station = current_user.weather_stations.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+          render :file => 'public/401', :status => :unauthorized, :layout => false and return
+        end
+        @alert_today = @weather_station.alert
+        @alert_forecasts = {}
+        (0..7).each do |i|
+          d = Date.today + i
+          @alert_forecasts[d] = @weather_station.alert(d)
+        end
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def weather_station_params
-      params.require(:weather_station).permit(:latitude, :longitude, :name)
+      params.require(:weather_station).permit(:latitude, :longitude, :name, :user_id)
     end
 end
