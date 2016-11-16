@@ -43,11 +43,10 @@
     </tr>
     <% end %>
   </table>
-
-  <%= @alerts_chart = line_chart @alert_forecasts.map {|date, alert| [date, alert.level]}, library: {title: 'Landslide Risk By Day'} %>
 </div>
 
-
+<h2>Alerts Chart</h2>
+<%= line_chart @chart_data %>
 
 <h2>Weather Reports from this station</h2>
 <div class="weather-reports">
@@ -63,7 +62,6 @@
     </tr>
     <% end %>
   </table>
-
 </div>
 
 <h2>Weather Reports from days Today - 4 through Today - 15</h2>

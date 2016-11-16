@@ -54,6 +54,21 @@ class WeatherStationsController < ApplicationController
       end
     end
 
+    @chart_data = [
+        {
+            :name => 'Alert Level',
+            :data => @alert_forecasts.map {|date, alert| [date, alert.level]}
+        },
+        {
+            :name => 'Precipitation',
+            :data => []
+        }
+    ]
+
+    @weather_reports.each do |r|
+      @chart_data[1][:data].push [ Date.parse(r.date), r.precip ] 
+    end
+
     if @alert_today.level > 0
       flash[:alert] = "As of yesterday's rainfall, station #{@weather_station.name} is at risk for landslides!!"
     else
