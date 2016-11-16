@@ -82,7 +82,7 @@ class WeatherStationsController < ApplicationController
       flash.now[:warning] = 'Please log in to view your weather stations'
       redirect_to login_path and return
     end
-    @weather_station = current_user.weather_statiosn.create
+    @weather_station = current_user.weather_stations.create
   end
 
   # GET /weather_stations/1/edit
@@ -105,6 +105,10 @@ class WeatherStationsController < ApplicationController
 
     respond_to do |format|
       if @weather_station.save
+        # Automatically update the station with weather reports
+        historical_dates = (1..18).collect {|i| Date.today - i}
+        @weather_station.update_from_darksky(historical_dates, true)
+
         format.html { redirect_to @weather_station, notice: 'Weather station was successfully created.' }
         format.json { render :show, status: :created, location: @weather_station }
       else
@@ -124,6 +128,10 @@ class WeatherStationsController < ApplicationController
 
     respond_to do |format|
       if @weather_station.update(weather_station_params)
+        # Automatically update the station with weather reports
+        historical_dates = (1..18).collect {|i| Date.today - i}
+        @weather_station.update_from_darksky(historical_dates, true)
+
         format.html { redirect_to @weather_station, notice: 'Weather station was successfully updated.' }
         format.json { render :show, status: :ok, location: @weather_station }
       else
