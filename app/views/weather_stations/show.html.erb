@@ -1,17 +1,14 @@
-<p id="notice"><%= notice %></p>
-<span id="alert"><%= alert %></span>
-<h1>Station Report: <%= @weather_station.name %></h1>
-<% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
-<% end %>
-<%= link_to 'Back to stations list', weather_stations_path %>
+<div class="center jumbotron">
+  <h1>Station Report: <%= @weather_station.name %></h1>
+  <%= link_to 'Edit', edit_weather_station_path(@weather_station) %> | <%= link_to 'Back to stations list', weather_stations_path %>
 
-<p>
-  <strong>Lat/Long:</strong>
-  <%= @weather_station.latitude %>,<%= @weather_station.longitude %>
-</p>
+  <p>
+    <strong>Lat/Long:</strong>
+    <%= @weather_station.latitude %>,<%= @weather_station.longitude %>
+  </p>
+</div>
 
-<%= link_to 'Edit', edit_weather_station_path(@weather_station) %> |
+
 
 <h2>Landslide Forecasts for this station</h2>
 <p>

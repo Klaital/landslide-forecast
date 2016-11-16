@@ -70,9 +70,9 @@ class WeatherStationsController < ApplicationController
     end
 
     if @alert_today.level > 0
-      flash[:alert] = "As of yesterday's rainfall, station #{@weather_station.name} is at risk for landslides!!"
+      flash.now[:alert] = "As of yesterday's rainfall, station #{@weather_station.name} is at risk for landslides!!"
     else
-      flash[:notice] = "This station is at low landslide risk"
+      flash.now[:success] = "This station is at low landslide risk"
     end
   end
 
